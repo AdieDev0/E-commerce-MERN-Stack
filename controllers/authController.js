@@ -1,3 +1,7 @@
-const registerController = () => {};
-
-export default { registerController };
+// In authController.js
+const registerController = () => {
+    // Your controller logic here
+  };
+  
+  export default registerController;
+  
