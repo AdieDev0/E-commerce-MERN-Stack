@@ -1,9 +1,9 @@
 import userModel from "../models/userModels.js";
-import { hashPassword } from "../helpers/authHelpers.js";
+import { hashPassword, comparePassword } from "../helpers/authHelpers.js";
 import JWT from "jsonwebtoken";
 
-// In authController.js
-const registerController = async (req, res) => {
+// Register Controller
+export const registerController = async (req, res) => {
   try {
     const { name, email, password, phone, address } = req.body;
 
@@ -48,8 +48,7 @@ const registerController = async (req, res) => {
   }
 };
 
-
-// POST LOGIN
+// Login Controller
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -105,6 +104,3 @@ export const loginController = async (req, res) => {
     });
   }
 };
-
-
-export default registerController;
