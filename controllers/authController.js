@@ -10,7 +10,8 @@ export const registerController = async (req, res) => {
     // Validation
     if (!name) return res.status(400).send({ error: "Name is required" });
     if (!email) return res.status(400).send({ error: "Email is required" });
-    if (!password) return res.status(400).send({ error: "Password is required" });
+    if (!password)
+      return res.status(400).send({ error: "Password is required" });
     if (!phone) return res.status(400).send({ error: "Phone is required" });
     if (!address) return res.status(400).send({ error: "Address is required" });
 
@@ -48,7 +49,7 @@ export const registerController = async (req, res) => {
   }
 };
 
-// Login Controller
+// LOGIN CONTROLLER
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
