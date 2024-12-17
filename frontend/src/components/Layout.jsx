@@ -1,10 +1,12 @@
 import React from "react";
-import Footer from "../components/Footer.jsx";
 
-const Footer = (porps) => {
+import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
+
+const layout = (porps) => {
   return (
     <div>
-      
+      <Header />
       <main>{porps.children}</main>
       <Footer />
     </div>
