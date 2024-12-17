@@ -1,5 +1,5 @@
 import JWT from "jsonwebtoken";
-import userModels from "../models/userModels";
+import userModels from "../models/userModels.js";
 
 // Protected Routes token base
 
@@ -35,4 +35,3 @@ export const isAdmin = async (req, res, next) => {
     });
   }
 };
- 
