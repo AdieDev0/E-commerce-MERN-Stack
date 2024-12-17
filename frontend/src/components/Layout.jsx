@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import Footer from "../components/Footer.jsx";
 
-const layout = () => {
+const Footer = (porps) => {
   return (
-    <div>layout</div>
-  )
-}
+    <div>
+      
+      <main>{porps.children}</main>
+      <Footer />
+    </div>
+  );
+};
 
-export default layout
+export default layout;
