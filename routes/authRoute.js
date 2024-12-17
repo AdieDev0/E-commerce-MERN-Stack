@@ -14,6 +14,6 @@ router.post("/register", registerController);
 router.post("/login", loginController);
 
 // TEST ROUTES
-router.get("test", testController);
+router.get("/test", testController);
 
 export default router;
