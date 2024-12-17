@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../src/components/layout";
-const Polocy = () => {
+const Policy = () => {
   return <Layout>Polocy</Layout>;
 };
 
-export default Polocy;
+export default Policy;
