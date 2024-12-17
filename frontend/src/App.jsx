@@ -1,10 +1,14 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePages from "./pages/HomePages";
+
 const App = () => {
   return (
-    <div>
-      <HomePages />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePages />} />
+      </Routes>
+    </Router>
   );
 };
 
