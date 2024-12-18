@@ -3,33 +3,55 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div className="bg-slate-300 py-7 px-14">
-      <div className="flex justify-between">
+    <header className="bg-gray-100 shadow-md py-5 px-10">
+      <div className="flex justify-between items-center">
         <div>
-          <p className="cursor-pointer">Logo</p>
+          <NavLink to="/" className="text-xl font-bold text-gray-800">
+            Logo
+          </NavLink>
         </div>
-        <div>
-          <ul className="flex gap-5">
-            <li className="cursor-pointer">
-              <NavLink to="/" />
-              Home
+        <nav>
+          <ul className="flex space-x-8">
+            <li>
+              <NavLink
+                to="/"
+                className="text-gray-800 hover:text-blue-600 transition-colors duration-300"
+                activeClassName="text-blue-600"
+              >
+                Home
+              </NavLink>
             </li>
-            <li className="cursor-pointer">
-              <NavLink to="/" />
-              Register
+            <li>
+              <NavLink
+                to="/register"
+                className="text-gray-800 hover:text-blue-600 transition-colors duration-300"
+                activeClassName="text-blue-600"
+              >
+                Register
+              </NavLink>
             </li>
-            <li className="cursor-pointer">
-              <NavLink to="/" />
-              Login
+            <li>
+              <NavLink
+                to="/login"
+                className="text-gray-800 hover:text-blue-600 transition-colors duration-300"
+                activeClassName="text-blue-600"
+              >
+                Login
+              </NavLink>
             </li>
-            <li className="cursor-pointer">
-              <NavLink to="/" />
-              Cart(0)
+            <li>
+              <NavLink
+                to="/cart"
+                className="text-gray-800 hover:text-blue-600 transition-colors duration-300"
+                activeClassName="text-blue-600"
+              >
+                Cart (0)
+              </NavLink>
             </li>
           </ul>
-        </div>
+        </nav>
       </div>
-    </div>
+    </header>
   );
 };
 
