@@ -15,7 +15,7 @@ const PageNotFound = () => {
     <div>
       <div className="flex flex-col items-center justify-center min-h-screen text-center">
         {/* Render Lottie Animation */}
-        <Lottie animationData={notFound} loop className="w-64 h-64 mb-4" />
+        <Lottie animationData={notFound} loop className="size-96" />
         <h1 className="text-2xl font-bold font-Outfit mb-5 ">Oops! Page Not Found</h1>
         <button
           onClick={handleGoBack}
