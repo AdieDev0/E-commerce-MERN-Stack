@@ -1,13 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import shopping from "../assets/online-shopping.png";
 
 const Header = () => {
   return (
-    <header className="bg-gray-100 shadow-md py-5 px-10">
+    <header className="bg-gray-100 shadow-md py-5 px-24">
       <div className="flex justify-between items-center">
         <div>
-          <NavLink to="/" className="text-xl font-bold text-gray-800 font-Outfit">
-            Logo
+          <NavLink
+            to="/"
+            className="flex gap-2 items-center text-3xl font-bold text-gray-800 font-Outfit"
+          >
+            <img src={shopping} alt="" className="w-9" />
+            BuyHive
           </NavLink>
         </div>
         <nav>
@@ -15,7 +20,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/"
-                className="text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
+                className="text-lg text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
                 activeClassName="text-blue-600"
               >
                 Home
@@ -24,7 +29,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/register"
-                className="text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
+                className="text-lg text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
                 activeClassName="text-blue-600"
               >
                 Register
@@ -33,7 +38,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/login"
-                className="text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
+                className="text-lg text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
                 activeClassName="text-blue-600"
               >
                 Login
@@ -42,7 +47,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/cart"
-                className="text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
+                className="text-lg text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
                 activeClassName="text-blue-600"
               >
                 Cart (0)
