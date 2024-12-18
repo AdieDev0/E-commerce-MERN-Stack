@@ -6,7 +6,7 @@ const Header = () => {
     <header className="bg-gray-100 shadow-md py-5 px-10">
       <div className="flex justify-between items-center">
         <div>
-          <NavLink to="/" className="text-xl font-bold text-gray-800">
+          <NavLink to="/" className="text-xl font-bold text-gray-800 font-Outfit">
             Logo
           </NavLink>
         </div>
@@ -15,7 +15,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/"
-                className="text-gray-800 hover:text-blue-600 transition-colors duration-300"
+                className="text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
                 activeClassName="text-blue-600"
               >
                 Home
@@ -24,7 +24,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/register"
-                className="text-gray-800 hover:text-blue-600 transition-colors duration-300"
+                className="text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
                 activeClassName="text-blue-600"
               >
                 Register
@@ -33,7 +33,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/login"
-                className="text-gray-800 hover:text-blue-600 transition-colors duration-300"
+                className="text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
                 activeClassName="text-blue-600"
               >
                 Login
@@ -42,7 +42,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/cart"
-                className="text-gray-800 hover:text-blue-600 transition-colors duration-300"
+                className="text-gray-800 hover:text-blue-600 transition-colors duration-300 font-Outfit"
                 activeClassName="text-blue-600"
               >
                 Cart (0)
