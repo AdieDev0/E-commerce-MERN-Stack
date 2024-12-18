@@ -1,6 +1,9 @@
 import React from "react";
 import { Target, Globe, Trophy, Users, CheckCircle, Star } from "lucide-react";
 import Layout from "../components/Layout.jsx";
+import boy2 from "../assets/boy2.png";
+import boy3 from "../assets/boy3.png";
+import girl1 from "../assets/girl1.png";
 
 const ValueCard = ({ icon: Icon, title, description }) => (
   <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group">
@@ -58,17 +61,17 @@ const About = () => {
     {
       name: "Emily Chen",
       role: "Founder & CEO",
-      image: "/api/placeholder/300/300?text=EC",
+      image: boy2, // Using the imported image
     },
     {
       name: "Michael Rodriguez",
       role: "Chief Technology Officer",
-      image: "/api/placeholder/300/300?text=MR",
+      image: boy3, // Using the imported image
     },
     {
       name: "Sarah Kumar",
       role: "Head of Customer Experience",
-      image: "/api/placeholder/300/300?text=SK",
+      image: girl1, // Using the imported image
     },
   ];
 
