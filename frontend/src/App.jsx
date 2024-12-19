@@ -5,6 +5,8 @@ import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Policy from "./pages/Policy.jsx";
 import Pagenotfound from "./pages/Pagenotfound.jsx";
+import Register from "./pages/auth/Register.jsx";
+
 
 
 const App = () => {
@@ -12,6 +14,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<HomePages />} />
+        <Route path="/register" element={<Register />} />
+
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/policy" element={<Policy />} />
