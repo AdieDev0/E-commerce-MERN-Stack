@@ -18,8 +18,8 @@ export const registerController = async (req, res) => {
     // Check existing user
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      return res.status(200).send({
-        success: true,
+      return res.status(409).send({
+        success: false,
         message: "Already registered. Please log in.",
       });
     }
@@ -37,14 +37,18 @@ export const registerController = async (req, res) => {
     res.status(201).send({
       success: true,
       message: "User Registered Successfully",
-      user,
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+      },
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
       message: "Error in Registration",
-      error,
     });
   }
 };

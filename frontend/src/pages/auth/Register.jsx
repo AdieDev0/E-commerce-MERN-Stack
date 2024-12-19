@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "../../components/Header";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate(); // Navigate to other routes
@@ -16,11 +17,15 @@ const Register = () => {
     address: "",
   });
   const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
+  const [confirmPassword, setConfirmPassword] = useState(""); // State for password confirmation
 
   // Handle input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (name === "password" || name === "confirmPassword") {
+      setConfirmPassword("");
+    }
   };
 
   // Toggle the visibility of the password
@@ -29,24 +34,48 @@ const Register = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Simulate successful registration
-    toast.success("Registration successful! Redirecting to login...", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    // Check if passwords match
+    if (formData.password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
 
-    // Redirect to login page after 3 seconds
-    setTimeout(() => {
-      navigate("/login");
-    }, 3000);
+    try {
+      // Sending the POST request to the API
+      const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+        address: formData.address,
+      });
+
+      // Check if registration was successful
+      if (res.data.success) {
+        toast.success("Registration successful! Redirecting to login...", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+
+        // Redirect to login page after 3 seconds
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -55,15 +84,11 @@ const Register = () => {
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <ToastContainer />
         <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-800 text-center">
-            Register
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-800 text-center">Register</h2>
           <form className="mt-6" onSubmit={handleSubmit}>
             {/* Name Input */}
             <div className="mb-4">
-              <label htmlFor="name" className="block text-gray-600">
-                Name
-              </label>
+              <label htmlFor="name" className="block text-gray-600">Name</label>
               <input
                 type="text"
                 id="name"
@@ -78,9 +103,7 @@ const Register = () => {
 
             {/* Email Input */}
             <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-600">
-                Email
-              </label>
+              <label htmlFor="email" className="block text-gray-600">Email</label>
               <input
                 type="email"
                 id="email"
@@ -95,9 +118,7 @@ const Register = () => {
 
             {/* Password Input with Toggle */}
             <div className="mb-4 relative">
-              <label htmlFor="password" className="block text-gray-600">
-                Password
-              </label>
+              <label htmlFor="password" className="block text-gray-600">Password</label>
               <input
                 type={showPassword ? "text" : "password"} // Show or hide password
                 id="password"
@@ -117,11 +138,24 @@ const Register = () => {
               </button>
             </div>
 
+            {/* Confirm Password Input */}
+            <div className="mb-4">
+              <label htmlFor="confirmPassword" className="block text-gray-600">Confirm Password</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Confirm your password"
+              />
+            </div>
+
             {/* Phone Input */}
             <div className="mb-4">
-              <label htmlFor="phone" className="block text-gray-600">
-                Phone
-              </label>
+              <label htmlFor="phone" className="block text-gray-600">Phone</label>
               <input
                 type="text"
                 id="phone"
@@ -136,9 +170,7 @@ const Register = () => {
 
             {/* Address Input */}
             <div className="mb-4">
-              <label htmlFor="address" className="block text-gray-600">
-                Address
-              </label>
+              <label htmlFor="address" className="block text-gray-600">Address</label>
               <textarea
                 id="address"
                 name="address"
