@@ -11,13 +11,14 @@ import { ToastContainer } from 'react-toastify';
 const App = () => {
   return (
     <Router>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<HomePages />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/policy" element={<Policy />} />
-        <Route path="/*" element={<Pagenotfound />} />
+        <Route path="*" element={<Pagenotfound />} />  {/* Use "*" for catching all unmatched routes */}
       </Routes>
     </Router>
   );

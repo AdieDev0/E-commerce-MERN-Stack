@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../components/Header";
-import { FaRegEye } from "react-icons/fa";
-import { FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import axios from "axios";
 
 const Register = () => {
-  const navigate = useNavigate(); // Navigate to other routes
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,65 +15,103 @@ const Register = () => {
     phone: "",
     address: "",
   });
-  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
-  const [confirmPassword, setConfirmPassword] = useState(""); // State for password confirmation
+  const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Handle input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    if (name === "password" || name === "confirmPassword") {
+    if (name === "password") {
       setConfirmPassword("");
     }
   };
 
-  // Toggle the visibility of the password
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Check if passwords match
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      toast.error("Name is required");
+      return false;
+    }
+    if (!formData.email.trim()) {
+      toast.error("Email is required");
+      return false;
+    }
+    if (!formData.password) {
+      toast.error("Password is required");
+      return false;
+    }
     if (formData.password !== confirmPassword) {
       toast.error("Passwords do not match");
-      return;
+      return false;
     }
+    if (!formData.phone.trim()) {
+      toast.error("Phone is required");
+      return false;
+    }
+    if (!formData.address.trim()) {
+      toast.error("Address is required");
+      return false;
+    }
+    return true;
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+    
+    setLoading(true);
     try {
-      // Sending the POST request to the API
-      const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        phone: formData.phone,
-        address: formData.address,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/auth/register`,
+        formData
+      );
 
-      // Check if registration was successful
-      if (res.data.success) {
-        toast.success("Registration successful! Redirecting to login...", {
+      if (response.data.success) {
+        toast.success(response.data.message, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
-          progress: undefined,
         });
 
-        // Redirect to login page after 3 seconds
+        // Clear form data
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          phone: "",
+          address: "",
+        });
+        setConfirmPassword("");
+
+        // Redirect to login after successful registration
         setTimeout(() => {
           navigate("/login");
         }, 3000);
-      } else {
-        toast.error("Registration failed. Please try again.");
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+      const errorMessage = 
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        "Error in registration";
+      
+      toast.error(errorMessage);
+      
+      // Handle specific error cases
+      if (error.response?.status === 409) {
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,7 +132,6 @@ const Register = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                required
                 className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your name"
               />
@@ -110,28 +146,26 @@ const Register = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                required
                 className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your email"
               />
             </div>
 
-            {/* Password Input with Toggle */}
+            {/* Password Input */}
             <div className="mb-4 relative">
               <label htmlFor="password" className="block text-gray-600">Password</label>
               <input
-                type={showPassword ? "text" : "password"} // Show or hide password
+                type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                required
                 className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your password"
               />
               <button
                 type="button"
-                onClick={togglePasswordVisibility} // Toggle password visibility
+                onClick={togglePasswordVisibility}
                 className="absolute top-11 right-3 text-gray-500 hover:text-gray-700 focus:outline-none"
               >
                 {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
@@ -147,7 +181,6 @@ const Register = () => {
                 name="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                required
                 className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Confirm your password"
               />
@@ -162,7 +195,6 @@ const Register = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                required
                 className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your phone number"
               />
@@ -176,7 +208,6 @@ const Register = () => {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                required
                 className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your address"
               />
@@ -185,9 +216,12 @@ const Register = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
+              disabled={loading}
+              className={`w-full bg-blue-500 text-white py-2 px-4 rounded-md transition duration-200 ${
+                loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+              }`}
             >
-              Register
+              {loading ? 'Registering...' : 'Register'}
             </button>
           </form>
           <p className="mt-4 text-sm text-gray-600 text-center">

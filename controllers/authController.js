@@ -7,36 +7,70 @@ export const registerController = async (req, res) => {
   try {
     const { name, email, password, phone, address } = req.body;
 
-    // Validation
-    if (!name) return res.status(400).send({ error: "Name is required" });
-    if (!email) return res.status(400).send({ error: "Email is required" });
-    if (!password)
-      return res.status(400).send({ error: "Password is required" });
-    if (!phone) return res.status(400).send({ error: "Phone is required" });
-    if (!address) return res.status(400).send({ error: "Address is required" });
+    // Input validation
+    const errors = [];
+    
+    // Name validation
+    if (!name || name.trim().length < 3) {
+      errors.push("Name must be at least 3 characters long");
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      errors.push("Please provide a valid email address");
+    }
+
+    // Password validation
+    if (!password || password.length < 6) {
+      errors.push("Password must be at least 6 characters long");
+    }
+    
+    // Phone validation
+    const phoneRegex = /^\+?[\d\s-]{10,}$/;
+    if (!phone || !phoneRegex.test(phone)) {
+      errors.push("Please provide a valid phone number");
+    }
+
+    // Address validation
+    if (!address || address.trim().length < 10) {
+      errors.push("Please provide a complete address (minimum 10 characters)");
+    }
+
+    // Return all validation errors at once
+    if (errors.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: errors
+      });
+    }
 
     // Check existing user
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      return res.status(409).send({
+      return res.status(409).json({
         success: false,
-        message: "Already registered. Please log in.",
+        message: "Email is already registered. Please login instead."
       });
     }
 
-    // Register user
+    // Hash the password
     const hashedPassword = await hashPassword(password);
+
+    // Create new user
     const user = await new userModel({
-      name,
-      email,
-      phone,
-      address,
+      name: name.trim(),
+      email: email.toLowerCase(),
       password: hashedPassword,
+      phone: phone.trim(),
+      address: address.trim(),
     }).save();
 
-    res.status(201).send({
+    // Send success response
+    res.status(201).json({
       success: true,
-      message: "User Registered Successfully",
+      message: "Registration successful! Please login.",
       user: {
         name: user.name,
         email: user.email,
@@ -44,11 +78,24 @@ export const registerController = async (req, res) => {
         address: user.address,
       },
     });
+
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
+    console.error("Registration error:", error);
+    
+    // Handle specific MongoDB errors
+    if (error.code === 11000) {
+      return res.status(409).json({
+        success: false,
+        message: "This email is already registered. Please login instead."
+      });
+    }
+
+    // Generic error response
+    res.status(500).json({
       success: false,
-      message: "Error in Registration",
+      message: "An error occurred during registration. Please try again.",
+      // Include error details in development only
+      ...(process.env.NODE_ENV === 'development' && { error: error.message })
     });
   }
 };
