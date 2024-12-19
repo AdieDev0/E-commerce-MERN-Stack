@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../components/Header";
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -106,39 +108,9 @@ const Register = () => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute top-9 right-3 text-gray-500 hover:text-gray-700 focus:outline-none"
+                className="absolute top-11 right-3 text-gray-500 hover:text-gray-700 focus:outline-none"
               >
-                {showPassword ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13.875 18.825a3.375 3.375 0 01-5.75-4.25M9.375 5.175a3.375 3.375 0 015.75 4.25M20.25 20.25a11.25 11.25 0 01-16.5 0M20.25 20.25a11.25 11.25 0 01-16.5 0M3.75 3.75a11.25 11.25 0 0116.5 0"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 12a3 3 0 01-3 3 3 3 0 01-3-3 3 3 0 013-3 3 3 0 013 3zM2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-.274.716-.603 1.417-.982 2.09M15.364 16.364C14.47 17.26 13.28 18 12 18c-4.478 0-8.268-2.943-9.542-7-.379-.673-.708-1.374-.982-2.09M9.375 5.175A3.375 3.375 0 0115.75 9.425M15.75 14.575A3.375 3.375 0 019.375 18.825"
-                    />
-                  </svg>
-                )}
+                {showPassword ? <FaRegEye  /> : <FaRegEyeSlash />}
               </button>
             </div>
 
