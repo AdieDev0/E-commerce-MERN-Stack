@@ -7,7 +7,7 @@ import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 const Register = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Navigate to other routes
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,17 +15,20 @@ const Register = () => {
     phone: "",
     address: "",
   });
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
 
+  // Handle input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Toggle the visibility of the password
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -96,7 +99,7 @@ const Register = () => {
                 Password
               </label>
               <input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? "text" : "password"} // Show or hide password
                 id="password"
                 name="password"
                 value={formData.password}
@@ -107,10 +110,10 @@ const Register = () => {
               />
               <button
                 type="button"
-                onClick={togglePasswordVisibility}
+                onClick={togglePasswordVisibility} // Toggle password visibility
                 className="absolute top-11 right-3 text-gray-500 hover:text-gray-700 focus:outline-none"
               >
-                {showPassword ? <FaRegEye  /> : <FaRegEyeSlash />}
+                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
               </button>
             </div>
 
