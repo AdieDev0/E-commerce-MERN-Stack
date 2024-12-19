@@ -6,6 +6,7 @@ import Contact from "./pages/Contact.jsx";
 import Policy from "./pages/Policy.jsx";
 import Pagenotfound from "./pages/Pagenotfound.jsx";
 import Register from "./pages/auth/Register.jsx";
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
