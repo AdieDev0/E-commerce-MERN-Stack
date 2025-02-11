@@ -18,7 +18,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/policy" element={<Policy />} />
-        <Route path="*" element={<Pagenotfound />} />  {/* Use "*" for catching all unmatched routes */}
+        <Route path="*" element={<Pagenotfound />} />
       </Routes>
     </Router>
   );
